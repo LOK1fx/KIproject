@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4e7f3eed290403040a2123e7d9ccd758
+guid: fe2f6304c54283d48bbf95d0a8b63459
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Wall
-    second: {fileID: 2100000, guid: 0e039d81d50093b44b97cf6903adac84, type: 2}
+      name: Coin
+    second: {fileID: 2100000, guid: 70e226a18b815874b8f0100b1ec524c8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

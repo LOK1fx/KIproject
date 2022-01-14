@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4e7f3eed290403040a2123e7d9ccd758
+guid: 3f2e8ce7ac687994689fdf55c753aa8a
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Wall
-    second: {fileID: 2100000, guid: 0e039d81d50093b44b97cf6903adac84, type: 2}
+      name: M_ButtonPad
+    second: {fileID: 2100000, guid: acc5473864d2b6d408037c71f2fdc929, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Pad
+    second: {fileID: 2100000, guid: 91fc00a44b08be44889f309f7de6e8da, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -39,7 +44,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.5
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

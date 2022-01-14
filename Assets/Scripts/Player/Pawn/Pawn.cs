@@ -12,11 +12,11 @@ public abstract class Pawn : MonoBehaviour, IPawnInput
     public abstract void OnMoveInput(Vector2 input);
     public abstract void OnInput();
 
-    public bool TryGetPawnController(out PawnController controller)
+    public bool TryGetPawnController<T>(out T controller) where T : PawnController
     {
-        if(PawnController != null)
+        if(PawnController != null && PawnController is T)
         {
-            controller = PawnController;
+            controller = (T)PawnController;
 
             return true;
         }

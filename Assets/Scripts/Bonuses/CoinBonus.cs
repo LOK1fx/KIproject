@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class HPBonus : Bonus
+public class CoinBonus : Bonus
 {
     [SerializeField] private GameObject _takeEffect;
 
@@ -15,12 +17,16 @@ public class HPBonus : Bonus
 
     protected override void OnGetBonus(Player player)
     {
-        if(player.GetHealth() >= player.MaxHealth)
+        if(player.TryGetPawnController<PlayerController>(out var controller))
+        {
+            controller.AddScore(1);
+        }
+        else
         {
             return;
         }
 
-        player.AddHealth(1);
+        _collider.enabled = false;
 
         var effect = Instantiate(_takeEffect, transform.position, Quaternion.identity);
         _animator.Play("HPBonus_Take", 0, 0.1f);
