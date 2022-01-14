@@ -27,7 +27,7 @@ public class Player : Pawn, IHealth
     private void Awake()
     {
         PlayerMovement = GetComponent<PlayerMovement>();
-        PlayerCamera = GameObject.FindGameObjectWithTag(Tags.MAIN_CAMERA).GetComponent<PlayerCamera>();
+        PlayerCamera = GameObject.FindGameObjectWithTag(Constants.Tags.MAIN_CAMERA).GetComponent<PlayerCamera>();
         PlayerState = GetComponent<PlayerState>();
     }
 
