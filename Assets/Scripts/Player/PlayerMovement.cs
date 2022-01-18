@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    public Action OnJump;
-    public Action OnLand;
+    public event Action OnJump;
+    public event Action OnLand;
 
     public bool IsMoving { get; private set; }
     public bool IsMovingHorizontal { get; private set; }

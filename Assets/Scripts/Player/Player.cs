@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : Pawn, IHealth
 {
+    public event Action OnDie;
+
     public PlayerMovement PlayerMovement { get; private set; }
     public PlayerCamera PlayerCamera { get; private set; }
     public PlayerState PlayerState { get; private set; }
@@ -34,7 +37,12 @@ public class Player : Pawn, IHealth
     private void Start()
     {
         //Debug
-        FindObjectOfType<PawnController>().SetControlledPawn(this);
+        var pawncontroller = FindObjectOfType<PawnController>();//
+        if (pawncontroller != null)//
+        {//
+            pawncontroller.SetControlledPawn(this);//
+        }//
+        //Debug
 
         Health = _defaultHealth;
 
@@ -77,11 +85,23 @@ public class Player : Pawn, IHealth
         Health -= hp;
 
         Health = Mathf.Clamp(Health, 0, _maxHealth);
+
+        if(Health == 0)
+        {
+            Death();
+        }
     }
 
     public int GetHealth()
     {
         return Health;
+    }
+
+    private void Death()
+    {
+        OnDie?.Invoke();
+
+        Destroy(gameObject);
     }
 
     private void OnLand()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour, IPawnInput
@@ -8,20 +6,30 @@ public class PlayerCamera : MonoBehaviour, IPawnInput
 
     [SerializeField] private float _sensivity = 12f;
     [SerializeField] private Vector3 _offset;
+    [SerializeField] private float _speed = 80f;
     [SerializeField] private float _maxViewAngle = 70f;
 
     [Space]
+    [SerializeField] private LayerMask _wallMask;
     [SerializeField] private Camera _camera;
 
     private float _yRotation;
     private float _xRotation;
 
+    private void Start()
+    {
+        _yRotation = Player.transform.localRotation.y;
+    }
+
     private void LateUpdate()
     {
         if(Player)
         {
+            var playerPos = Player.transform.position;
+
             _camera.transform.localPosition = _offset;
-            transform.position = Player.transform.position;
+
+            transform.position = Vector3.Lerp(transform.position, playerPos, Time.deltaTime * _speed);
         }
     }
 

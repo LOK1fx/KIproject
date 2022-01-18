@@ -47,6 +47,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   _sensivity: 25
   _offset: {x: 0, y: 2.15, z: -2.75}
+  _speed: 9
   _maxViewAngle: 60
   _camera: {fileID: 2485415586840842663}
 --- !u!1 &2485415586840842661

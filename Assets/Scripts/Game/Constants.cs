@@ -10,4 +10,9 @@ public static class Constants
         public const string EDITOR_ONLY = "EditorOnly";
         public const string UNTAGGED = "Untagged";
     }
+
+    public static class Values
+    {
+        public const int MAXIMUM_DAMAGE = 99999999;
+    }
 }

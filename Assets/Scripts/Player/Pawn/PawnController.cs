@@ -1,10 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PawnController : MonoBehaviour
 {
+    public PawnController Instance { get; set; }
+
     public Pawn ControlledPawn { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     protected virtual void Update()
     {

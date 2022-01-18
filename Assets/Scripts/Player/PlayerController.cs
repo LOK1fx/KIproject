@@ -2,7 +2,7 @@ using System;
 
 public class PlayerController : PawnController
 {
-    public Action OnScoreUpdated;
+    public event Action OnScoreUpdated;
 
     public int Score { get; private set; }
 

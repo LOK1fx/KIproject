@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movingThresholdSpeed: 0.1
   _jumpForce: 10
-  _speed: 5
+  _speed: 4
   DirectionTransform: {fileID: 6497117058758555007}
 --- !u!114 &3986165382721112141
 MonoBehaviour:
@@ -117,7 +117,7 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
-  _groundCheckerPosition: {x: 0, y: -0.25, z: 0}
+  _groundCheckerPosition: {x: 0, y: -0.28, z: 0}
   _groundCheckerRadius: 0.3
 --- !u!114 &6445370575330836418
 MonoBehaviour:
