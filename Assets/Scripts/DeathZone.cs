@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DeathZone : MonoBehaviour
 {
+    [SerializeField] private Damage.Type _damageType = Damage.Type.Void;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent<IHealth>(out var health))
