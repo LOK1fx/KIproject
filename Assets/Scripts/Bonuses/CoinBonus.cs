@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinBonus : Bonus
@@ -17,14 +15,7 @@ public class CoinBonus : Bonus
 
     protected override void OnGetBonus(Player player)
     {
-        if(player.TryGetPawnController<PlayerController>(out var controller))
-        {
-            controller.AddScore(1);
-        }
-        else
-        {
-            return;
-        }
+        player.ApplyModifier(new CoinBonusModifier(this));
 
         _collider.enabled = false;
 

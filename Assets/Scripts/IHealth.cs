@@ -1,7 +1,6 @@
 public interface IHealth
 {
-
     void AddHealth(int hp);
-    void TakeDamage(int damage);
+    void TakeDamage(Damage damage);
     int GetHealth();
 }

@@ -23,6 +23,8 @@ public class DeathZone : MonoBehaviour
 
     private void KillActor(IHealth health)
     {
-        health.TakeDamage(Constants.Values.MAXIMUM_DAMAGE);
+        var damage = new Damage(Constants.Gameplay.MAXIMUM_DAMAGE, _damageType);
+
+        health.TakeDamage(damage);
     }
 }

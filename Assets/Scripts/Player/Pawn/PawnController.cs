@@ -23,6 +23,18 @@ public class PawnController : MonoBehaviour
         }  
     }
 
+    public T GetControlledPawn<T>() where T: Pawn
+    {
+        if((T)ControlledPawn)
+        {
+            return (T)ControlledPawn;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void SetControlledPawn(Pawn pawn)
     {
         ControlledPawn = pawn;

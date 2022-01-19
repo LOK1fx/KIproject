@@ -4953,6 +4953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c769241a346dfd74a8491d10c14484f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Color: {r: 1, g: 0.7400185, b: 0, a: 1}
   _rotationSpeed: 40
   _takeEffect: {fileID: 5487577616401266218, guid: 19b0327cd3fbb0d4abcb4fb343ee7f8a, type: 3}
 --- !u!136 &8452217963960315963

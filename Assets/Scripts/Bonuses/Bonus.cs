@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public abstract class Bonus : MonoBehaviour
 {
+    public Color Color = Color.white;
+
     [SerializeField] private float _rotationSpeed = 10f;
 
     private void OnTriggerEnter(Collider other)

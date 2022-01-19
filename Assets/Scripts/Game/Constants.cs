@@ -11,7 +11,7 @@ public static class Constants
         public const string UNTAGGED = "Untagged";
     }
 
-    public static class Values
+    public static class Gameplay
     {
         public const int MAXIMUM_DAMAGE = 99999999;
     }

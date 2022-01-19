@@ -15,12 +15,9 @@ public class HPBonus : Bonus
 
     protected override void OnGetBonus(Player player)
     {
-        if(player.GetHealth() >= player.MaxHealth)
-        {
-            return;
-        }
+        player.ApplyModifier(new HPBonusModifier(this));
 
-        player.AddHealth(1);
+        _collider.enabled = false;
 
         var effect = Instantiate(_takeEffect, transform.position, Quaternion.identity);
         _animator.Play("HPBonus_Take", 0, 0.1f);

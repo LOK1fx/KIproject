@@ -4,7 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : Pawn, IHealth
 {
-    public event Action OnDie;
+    public event Action<Damage.Type> OnDie;
+    public event Action OnHealthChanged;
+    public event Action<Bonus> OnGetBonus;
 
     public PlayerMovement PlayerMovement { get; private set; }
     public PlayerCamera PlayerCamera { get; private set; }
@@ -32,10 +34,7 @@ public class Player : Pawn, IHealth
         PlayerMovement = GetComponent<PlayerMovement>();
         PlayerCamera = GameObject.FindGameObjectWithTag(Constants.Tags.MAIN_CAMERA).GetComponent<PlayerCamera>();
         PlayerState = GetComponent<PlayerState>();
-    }
 
-    private void Start()
-    {
         //Debug
         var pawncontroller = FindObjectOfType<PawnController>();//
         if (pawncontroller != null)//
@@ -43,7 +42,10 @@ public class Player : Pawn, IHealth
             pawncontroller.SetControlledPawn(this);//
         }//
         //Debug
+    }
 
+    private void Start()
+    {
         Health = _defaultHealth;
 
         PlayerMovement.OnLand += OnLand;
@@ -73,22 +75,44 @@ public class Player : Pawn, IHealth
         PlayerCamera.OnInput();
     }
 
+    public void ApplyModifier(Modifier modifier)
+    {
+        modifier.Apply(this);
+
+        if(modifier is BonusModifier)
+        {
+            OnGetBonus?.Invoke((modifier as BonusModifier).Bonus);
+        }
+    }
+
+    public void ApplyModifiers(Modifier[] modifiers)
+    {
+        foreach (var modifier in modifiers)
+        {
+            ApplyModifier(modifier);
+        }
+    }
+
     public void AddHealth(int hp)
     {
         Health += hp;
 
         Health = Mathf.Clamp(Health, 0, _maxHealth);
+
+        OnHealthChanged?.Invoke();
     }
 
-    public void TakeDamage(int hp)
+    public void TakeDamage(Damage damage)
     {
-        Health -= hp;
+        Health -= damage.Value;
 
         Health = Mathf.Clamp(Health, 0, _maxHealth);
 
-        if(Health == 0)
+        OnHealthChanged?.Invoke();
+
+        if (Health == 0)
         {
-            Death();
+            Death(damage.DamageType);
         }
     }
 
@@ -97,9 +121,9 @@ public class Player : Pawn, IHealth
         return Health;
     }
 
-    private void Death()
+    private void Death(Damage.Type type)
     {
-        OnDie?.Invoke();
+        OnDie?.Invoke(type);
 
         Destroy(gameObject);
     }
