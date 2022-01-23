@@ -1,8 +1,8 @@
 public class PlayerLazerDieEffect : PlayerDeathEffect
 {
-    protected override void OnPlayerDie(Damage.Type type)
+    protected override void OnPlayerDie(Damage damage)
     {
-        if(type == Damage.Type.Lazer)
+        if(damage.DamageType == Damage.Type.Lazer)
         {
             var effect = Instantiate(effectPrefab, transform.position, transform.rotation);
 

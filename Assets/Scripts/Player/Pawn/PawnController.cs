@@ -39,5 +39,6 @@ public class PawnController : MonoBehaviour
     {
         ControlledPawn = pawn;
         ControlledPawn.SetPawnController(this);
+        ControlledPawn.OnPocces();
     }
 }

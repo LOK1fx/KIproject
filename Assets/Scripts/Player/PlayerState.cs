@@ -8,11 +8,13 @@ public class PlayerState : MonoBehaviour
 
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private Vector3 _groundCheckerPosition;
-    [SerializeField] private float _groundCheckerRadius = 0.3f;
+    [SerializeField] private Vector3 _groundCheckerSize;
 
     private void FixedUpdate()
     {
-        if (Physics.CheckSphere(transform.position + _groundCheckerPosition, _groundCheckerRadius, _groundMask))
+        var center = transform.position + _groundCheckerPosition;
+
+        if (Physics.CheckBox(center, _groundCheckerSize, Quaternion.identity, _groundMask, QueryTriggerInteraction.Ignore))
         {
             OnGround = true;
         }
@@ -25,6 +27,6 @@ public class PlayerState : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position + _groundCheckerPosition, _groundCheckerRadius);
+        Gizmos.DrawWireCube(transform.position + _groundCheckerPosition, _groundCheckerSize * 2);
     }
 }

@@ -16,5 +16,5 @@ public abstract class PlayerDeathEffect : MonoBehaviour
         _player.OnDie += OnPlayerDie;
     }
 
-    protected abstract void OnPlayerDie(Damage.Type type);
+    protected abstract void OnPlayerDie(Damage type);
 }

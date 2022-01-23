@@ -33,7 +33,7 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetTrigger(ANIM_TRIGGER_JUMP);
     }
 
-    private void OnLand()
+    private void OnLand(Vector3 velocity)
     {
         _animator.SetTrigger(ANIM_TRIGGER_LAND);
     }

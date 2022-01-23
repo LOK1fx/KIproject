@@ -9,6 +9,7 @@ public abstract class Pawn : MonoBehaviour, IPawnInput
         PawnController = controller;
     }
 
+    public abstract void OnPocces();
     public abstract void OnMoveInput(Vector2 input);
     public abstract void OnInput();
 

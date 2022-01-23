@@ -1,16 +1,30 @@
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class PlayerHud : MonoBehaviour
 {
+    public float HudAlpha = 1f;
+
     [SerializeField] private TextMeshProUGUI _hpText;
     [SerializeField] private TextMeshProUGUI _scoreText;
 
     [Space]
+    [Header("Components")]
     [SerializeField] private BonusTakeOverlay _onBonusTakenScreen;
+    [SerializeField] private DeathScreenUI _deathScreen;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     private PlayerController _playerController;
     private Player _player;
+
+    private CanvasGroup _canvas;
+
+    private void Awake()
+    {
+        _canvas = GetComponent<CanvasGroup>();
+        _canvas.alpha = 0f;
+    }
 
     private void Start()
     {
@@ -25,9 +39,27 @@ public class PlayerHud : MonoBehaviour
             _player.OnGetBonus += OnPlayerGetBonus;
 
             _playerController.OnScoreUpdated += OnScoreUpdated;
+            _playerController.InputPause += OnPause;
         }
 
         Debug.Log(name + " | " + _player + " | " + _playerController);
+    }
+
+    private void OnPause()
+    {
+        if(_pauseMenu.IsOpen)
+        {
+            _pauseMenu.ReturnToGame();
+        }
+        else
+        {
+            _pauseMenu.ShowMenu();
+        }
+    }
+
+    private void Update()
+    {
+        _canvas.alpha = Mathf.Lerp(_canvas.alpha, HudAlpha, Time.deltaTime * 8f);
     }
 
     private void OnPlayerGetBonus(Bonus bonus)
@@ -45,8 +77,10 @@ public class PlayerHud : MonoBehaviour
         _hpText.text = $"HP: {_player.Health}";
     }
 
-    private void OnPlayerDie(Damage.Type type)
+    private void OnPlayerDie(Damage damage)
     {
         _hpText.text = $"Player is dead";
+
+        _deathScreen.Show(damage);
     }
 }

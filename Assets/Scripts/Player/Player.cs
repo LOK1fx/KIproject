@@ -1,16 +1,19 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : Pawn, IHealth
 {
-    public event Action<Damage.Type> OnDie;
+    public event Action<Damage> OnDie;
     public event Action OnHealthChanged;
     public event Action<Bonus> OnGetBonus;
 
     public PlayerMovement PlayerMovement { get; private set; }
     public PlayerCamera PlayerCamera { get; private set; }
     public PlayerState PlayerState { get; private set; }
+
+    public List<Modifier> ActiveModifiers { get; private set; }
 
     public int Health { get; private set; }
     public int MaxHealth { get => _maxHealth; set => _maxHealth = _maxHealth; }
@@ -42,6 +45,8 @@ public class Player : Pawn, IHealth
             pawncontroller.SetControlledPawn(this);//
         }//
         //Debug
+
+        ActiveModifiers = new List<Modifier>();
     }
 
     private void Start()
@@ -53,9 +58,15 @@ public class Player : Pawn, IHealth
 
     private void Update()
     {
-        if(PlayerMovement.IsMovingHorizontal)
+        RotatePlayer();
+    }
+
+    private void RotatePlayer()
+    {
+        if (PlayerMovement.IsMovingHorizontal && PlayerMovement.InputDirection != Vector3.zero)
         {
-            var lookRotation = Quaternion.LookRotation(PlayerMovement.DirectionTransform.forward);
+            var lookRotation = Quaternion.LookRotation(PlayerMovement.InputDirection);
+
             _playerModelRoot.rotation = Quaternion.Lerp(_playerModelRoot.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
         }
     }
@@ -83,6 +94,8 @@ public class Player : Pawn, IHealth
         {
             OnGetBonus?.Invoke((modifier as BonusModifier).Bonus);
         }
+
+        ActiveModifiers.Add(modifier);
     }
 
     public void ApplyModifiers(Modifier[] modifiers)
@@ -104,6 +117,24 @@ public class Player : Pawn, IHealth
 
     public void TakeDamage(Damage damage)
     {
+        foreach (var modifier in ActiveModifiers)
+        {
+            if(modifier is BonusModifier)
+            {
+                if((modifier as BonusModifier).MakePlayerInvicible == true)
+                {
+                    if(damage.DamageType == Damage.Type.Void)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
         Health -= damage.Value;
 
         Health = Mathf.Clamp(Health, 0, _maxHealth);
@@ -112,7 +143,7 @@ public class Player : Pawn, IHealth
 
         if (Health == 0)
         {
-            Death(damage.DamageType);
+            Death(damage);
         }
     }
 
@@ -121,18 +152,21 @@ public class Player : Pawn, IHealth
         return Health;
     }
 
-    private void Death(Damage.Type type)
+    private void Death(Damage damage)
     {
-        OnDie?.Invoke(type);
+        OnDie?.Invoke(damage);
 
         Destroy(gameObject);
     }
 
-    private void OnLand()
+    private void OnLand(Vector3 velocity)
     {
-        var effect = Instantiate(_landEffectPrefab, transform.position - (Vector3.up * 0.25f), Quaternion.identity);
+        if(velocity.y >= -7f)
+        {
+            var effect = Instantiate(_landEffectPrefab, transform.position - (Vector3.up * 0.25f), Quaternion.identity);
 
-        Destroy(effect, 1.6f);
+            Destroy(effect, 1.6f);
+        } 
     }
 
     private void OnDisable()
@@ -143,5 +177,10 @@ public class Player : Pawn, IHealth
     private void OnDestroy()
     {
         PlayerMovement.OnLand -= OnLand;
+    }
+
+    public override void OnPocces()
+    {
+        PlayerCamera.Player = this;
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SampleLevel
   m_EditorClassIdentifier: 
   LevelImage: {fileID: 21300000, guid: 9a38b02bda0abc840b243da0283e6a40, type: 3}
-  BuildIndex: 1
+  BuildIndex: 2
   Name: TestLevel
   IsCompleted: 0
