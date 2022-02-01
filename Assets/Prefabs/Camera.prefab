@@ -49,6 +49,9 @@ MonoBehaviour:
   _offset: {x: 0, y: 2.15, z: -2.75}
   _speed: 9
   _maxViewAngle: 60
+  _wallMask:
+    serializedVersion: 2
+    m_Bits: 0
   _camera: {fileID: 2485415586840842663}
 --- !u!1 &2485415586840842661
 GameObject:
@@ -62,6 +65,7 @@ GameObject:
   - component: {fileID: 2485415586840842663}
   - component: {fileID: 2485415586840842662}
   - component: {fileID: 2485415586840842657}
+  - component: {fileID: 415350665109707468}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -194,3 +198,11 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!124 &415350665109707468
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2485415586840842661}
+  m_Enabled: 1

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -11,21 +9,23 @@ public class PlayerAnimation : MonoBehaviour
     private const string ANIM_PARAM_ON_GROUND = "OnGround";
 
     private Animator _animator;
-    private Player _player;
+    private PlayerMovement _playerMovement;
+    private PlayerState _playerState;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        _player = GetComponent<Player>();
+        _playerMovement = GetComponent<PlayerMovement>();
+        _playerState = GetComponent<PlayerState>();
 
-        _player.PlayerMovement.OnJump += OnJump;
-        _player.PlayerMovement.OnLand += OnLand;
+        _playerMovement.OnJump += OnJump;
+        _playerMovement.OnLand += OnLand;
     }
 
     private void Update()
     {
-        _animator.SetFloat(ANIM_PARAM_SPEED, _player.PlayerMovement.CurrentSpeed);
-        _animator.SetBool(ANIM_PARAM_ON_GROUND, _player.PlayerState.OnGround);
+        _animator.SetFloat(ANIM_PARAM_SPEED, _playerMovement.CurrentSpeed);
+        _animator.SetBool(ANIM_PARAM_ON_GROUND, _playerState.OnGround);
     }
 
     private void OnJump()
@@ -40,13 +40,13 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.PlayerMovement.OnJump -= OnJump;
-        _player.PlayerMovement.OnLand -= OnLand;
+        _playerMovement.OnJump -= OnJump;
+        _playerMovement.OnLand -= OnLand;
     }
 
     private void OnDestroy()
     {
-        _player.PlayerMovement.OnJump -= OnJump;
-        _player.PlayerMovement.OnLand -= OnLand;
+        _playerMovement.OnJump -= OnJump;
+        _playerMovement.OnLand -= OnLand;
     }
 }

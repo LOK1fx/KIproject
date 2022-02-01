@@ -20,11 +20,13 @@ public class PlayerCamera : MonoBehaviour, IPawnInput
 
     private void Start()
     {
-        _yRotation = Player.transform.localRotation.y;
-
         if(Player)
         {
+            _yRotation = Player.transform.localRotation.y;
             Player.OnDie += OnPlayerDie;
+
+
+            transform.position = Player.transform.position - _offset;
         }
     }
 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerState))]
 public class PlayerMovement : MonoBehaviour
 {
     public event Action OnJump;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform DirectionTransform;
 
     private Rigidbody _rigidbody;
-    private Player _player;
+    private PlayerState _state;
 
     private bool _lastGrounded;
     private RaycastHit _slopeHit;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _player = GetComponent<Player>();
+        _state = GetComponent<PlayerState>();
     }
 
     private void FixedUpdate()
@@ -70,8 +70,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if(_player.PlayerState.OnGround)
+        if(_state.OnGround)
         {
+            var velocity = _rigidbody.velocity;
+
+            _rigidbody.velocity = new Vector3(velocity.x, 0f, velocity.z);
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
 
             OnJump?.Invoke();
@@ -80,9 +83,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        _rigidbody.useGravity = !_player.PlayerState.OnGround;
+        //_rigidbody.useGravity = !_player.PlayerState.OnGround;
 
-        if(_player.PlayerState.OnGround)
+        if(_state.OnGround)
         {
             GroundMove(OnSlope());
         }
@@ -91,12 +94,12 @@ public class PlayerMovement : MonoBehaviour
             AirMove();
         }
 
-        if (_player.PlayerState.OnGround != _lastGrounded && _lastGrounded == false)
+        if (_state.OnGround != _lastGrounded && _lastGrounded == false)
         {
             OnLand?.Invoke(_rigidbody.velocity);
         }
 
-        _lastGrounded = _player.PlayerState.OnGround;
+        _lastGrounded = _state.OnGround;
     }
     
     private void GroundMove(bool onSlope)

@@ -35,16 +35,8 @@ public class Player : Pawn, IHealth
     private void Awake()
     {
         PlayerMovement = GetComponent<PlayerMovement>();
-        PlayerCamera = GameObject.FindGameObjectWithTag(Constants.Tags.MAIN_CAMERA).GetComponent<PlayerCamera>();
         PlayerState = GetComponent<PlayerState>();
-
-        //Debug
-        var pawncontroller = FindObjectOfType<PawnController>();//
-        if (pawncontroller != null)//
-        {//
-            pawncontroller.SetControlledPawn(this);//
-        }//
-        //Debug
+        PlayerCamera = GameObject.FindGameObjectWithTag(Constants.Tags.MAIN_CAMERA).GetComponent<PlayerCamera>();
 
         ActiveModifiers = new List<Modifier>();
     }
@@ -54,6 +46,14 @@ public class Player : Pawn, IHealth
         Health = _defaultHealth;
 
         PlayerMovement.OnLand += OnLand;
+
+        //Debug
+        var pawncontroller = FindObjectOfType<PawnController>();//
+        if (pawncontroller != null)//
+        {//
+            pawncontroller.SetControlledPawn(this, true);//
+        }//
+        //Debug
     }
 
     private void Update()

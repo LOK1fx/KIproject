@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecaced4df1ecea468d5112639edf7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlayerControl: 0
   _rotationSpeed: 8
   _defaultHealth: 3
   _maxHealth: 4
@@ -117,7 +118,7 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
-  _movingThresholdSpeed: 0.1
+  _movingThresholdSpeed: 0.2
   _jumpForce: 10
   _speed: 4
   DirectionTransform: {fileID: 6497117058758555007}

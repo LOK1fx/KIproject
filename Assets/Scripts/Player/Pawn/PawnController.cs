@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PawnController : MonoBehaviour
 {
-    public PawnController Instance { get; set; }
+    public event Action<Pawn> OnControlledPawnChanged;
+
+    public static PawnController Instance { get; set; }
 
     public Pawn ControlledPawn { get; private set; }
 
@@ -23,22 +26,29 @@ public class PawnController : MonoBehaviour
         }  
     }
 
-    public T GetControlledPawn<T>() where T: Pawn
+    public bool TryGetControlledPawn<T>(out T pawn) where T: Pawn
     {
         if((T)ControlledPawn)
         {
-            return (T)ControlledPawn;
+            pawn = (T)ControlledPawn;
+
+            return true;
         }
         else
         {
-            return null;
+            pawn = null;
+
+            return false;
         }
     }
 
-    public void SetControlledPawn(Pawn pawn)
+    public void SetControlledPawn(Pawn pawn, bool player)
     {
         ControlledPawn = pawn;
+        ControlledPawn.InPlayerControl = player;
         ControlledPawn.SetPawnController(this);
         ControlledPawn.OnPocces();
+
+        OnControlledPawnChanged?.Invoke(ControlledPawn);
     }
 }

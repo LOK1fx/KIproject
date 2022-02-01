@@ -24,23 +24,30 @@ public class PlayerHud : MonoBehaviour
     {
         _canvas = GetComponent<CanvasGroup>();
         _canvas.alpha = 0f;
+
+        _playerController = FindObjectOfType<PlayerController>();
+        _playerController.OnControlledPawnChanged += OnControlledPawnChanged;
     }
 
-    private void Start()
+    private void OnControlledPawnChanged(Pawn obj)
     {
-        _playerController = FindObjectOfType<PlayerController>();
-
-        _player = _playerController.GetControlledPawn<Player>();
-
-        if(_player && _playerController)
+        if(_playerController.TryGetControlledPawn<Player>(out var player))
         {
-            _player.OnDie += OnPlayerDie;
-            _player.OnHealthChanged += OnPlayerHpChanged;
-            _player.OnGetBonus += OnPlayerGetBonus;
-
-            _playerController.OnScoreUpdated += OnScoreUpdated;
-            _playerController.InputPause += OnPause;
+            _player = player;
         }
+        else
+        {
+            Debug.Log("ControlledPawn isn't player!");
+
+            return;
+        }
+
+        _player.OnDie += OnPlayerDie;
+        _player.OnHealthChanged += OnPlayerHpChanged;
+        _player.OnGetBonus += OnPlayerGetBonus;
+
+        _playerController.OnScoreUpdated += OnScoreUpdated;
+        _playerController.InputPause += OnPause;
 
         Debug.Log(name + " | " + _player + " | " + _playerController);
     }

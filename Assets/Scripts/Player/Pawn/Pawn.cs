@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class Pawn : MonoBehaviour, IPawnInput
 {
     public PawnController PawnController { get; protected set; }
+    
+    [HideInInspector] public bool InPlayerControl;
 
     public void SetPawnController(PawnController controller)
     {

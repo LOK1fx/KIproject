@@ -3085,7 +3085,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3089238282635336290, guid: b8bf7a27865d22e4fa464c6cbaa9efe2, type: 3}
       propertyPath: m_Name
-      value: ReturnToGame (1)
+      value: BackToMenu
       objectReference: {fileID: 0}
     - target: {fileID: 3089238282635336291, guid: b8bf7a27865d22e4fa464c6cbaa9efe2, type: 3}
       propertyPath: m_Pivot.x

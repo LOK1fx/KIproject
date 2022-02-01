@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DeathZone : MonoBehaviour
 {
+    [SerializeField] private int _damage;
+    [SerializeField] private bool _useMaximumDamage = true;
     [SerializeField] private Actor _actor;
     [SerializeField] private Damage.Type _damageType = Damage.Type.Void;
 
@@ -30,7 +32,18 @@ public class DeathZone : MonoBehaviour
     {
         if (collider.TryGetComponent<IHealth>(out var health))
         {
-            var damage = new Damage(Constants.Gameplay.MAXIMUM_DAMAGE, _damageType, _actor);
+            int value;
+
+            if (_useMaximumDamage)
+            {
+                value = Constants.Gameplay.MAXIMUM_DAMAGE;
+            }
+            else
+            {
+                value = _damage;
+            }
+
+            var damage = new Damage(value, _damageType, _actor);
 
             health.TakeDamage(damage);
         }   
